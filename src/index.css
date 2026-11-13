@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Single dark theme by design (night-navy strategy map, per brief).
+   Layout idea: full-bleed map stage with floating glass HUD — site & moves left, consequences right, time along the bottom. */
+:root {
+  color-scheme: dark;
+  --bg: #060b16;
+  --panel: #0e1626;      /* chart surface (palette validated against this) */
+  --raised: #142039;
+  --line: #1f2c46;
+  --line-2: #2b3b5c;
+  --ink: #e8edf5;
+  --ink-2: #a7b2c5;
+  --ink-3: #6d7a91;
+  --amber: #f0a83c;      /* fossil-fuel risk */
+  --teal: #2ee6c9;       /* renewable assets */
+  --sky: #7aa2ff;        /* hybrid */
+  --danger: #ff7a5c;
+  --gold: #f0cf6a;
+  --glass: rgba(9, 17, 33, 0.86);
+  /* chart series (validated: lightness band, CVD ΔE ≥ 14.9 on --panel) */
+  --s-fossil: #c9821f;
+  --s-renew: #1fa89b;
+  --s-storage: #5b88f0;
+  --s-neutral: #66758c;
+  --font-display: "IBM Plex Sans Condensed", "IBM Plex Sans", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { text-wrap: balance; }
+.num { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10.5px; font-weight: 600; color: var(--ink-3); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; }
+.hairline { border-color: var(--line); }
+
+:focus-visible { outline: 2px solid var(--sky); outline-offset: 2px; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: 0.45; }
+
+/* range inputs */
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 18px; background: transparent; }
+input[type="range"]::-webkit-slider-runnable-track { height: 3px; background: var(--line-2); border-radius: 2px; }
+input[type="range"]::-moz-range-track { height: 3px; background: var(--line-2); border-radius: 2px; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: -4.5px; border-radius: 50%; background: var(--ink); border: 2px solid var(--panel); box-shadow: 0 0 0 1px var(--line-2); }
+input[type="range"]::-moz-range-thumb { width: 10px; height: 10px; border-radius: 50%; background: var(--ink); border: 2px solid var(--panel); }
+input[type="range"].amber::-webkit-slider-thumb { background: var(--amber); }
+input[type="range"].teal::-webkit-slider-thumb { background: var(--teal); }
+input[type="range"].amber::-moz-range-thumb { background: var(--amber); }
+input[type="range"].teal::-moz-range-thumb { background: var(--teal); }
+
+input[type="number"], input[type="text"], select {
+  background: var(--bg); border: 1px solid var(--line-2); border-radius: 3px; color: var(--ink); padding: 2px 6px;
+  font-family: "IBM Plex Mono", monospace; font-size: 12px;
+}
+
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+.scroll-thin { scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+
+/* map */
+.route-flow { stroke-dasharray: 2 6; animation: flow 1.6s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -16; } }
+.pulse { animation: pulse 2.2s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { 0% { opacity: 0.7; transform: scale(0.6); } 100% { opacity: 0; transform: scale(2.4); } }
+.fade-num { transition: color 0.3s ease; }
+.country { transition: fill 0.35s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .route-flow, .pulse { animation: none; }
+  .country, .fade-num { transition: none; }
+}
+.tip { pointer-events: none; position: absolute; z-index: 30; max-width: 280px; background: #0b1322f2; border: 1px solid var(--line-2); border-radius: 4px; padding: 8px 10px; box-shadow: 0 8px 24px #0008; }
+
+/* ---- game layer ---- */
+.hud-label { font-family: "Saira Condensed", "IBM Plex Sans Condensed", "Arial Narrow", sans-serif; font-weight: 600; letter-spacing: 0.06em; }
+.display { font-family: "Saira", "Saira Condensed", "IBM Plex Sans", sans-serif; }
+.glass { background: var(--glass); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 10px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.ping { animation: ping 2.4s ease-out 2; transform-box: fill-box; transform-origin: center; opacity: 0; }
+@keyframes ping { 0% { opacity: 0.9; transform: scale(0.5); } 100% { opacity: 0; transform: scale(5); } }
+.ember { animation: ember 2.6s ease-in-out infinite; }
+@keyframes ember { 0%, 100% { opacity: 0.18; } 50% { opacity: 0.38; } }
+.card-move { transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease; }
+.card-move:hover { transform: translateY(-1px); }
+.rise { animation: rise 0.45s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.fade-in { animation: fadein 0.5s ease both; }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+.nudge { animation: nudge 1.8s ease-in-out infinite; }
+@keyframes nudge { 0%,100% { box-shadow: 0 0 0 0 rgba(46,230,201,0.0); } 50% { box-shadow: 0 0 0 4px rgba(46,230,201,0.18); } }
+@media (prefers-reduced-motion: reduce) {
+  .ping, .ember, .rise, .fade-in, .nudge { animation: none; opacity: 1; }
+  .card-move { transition: none; }
+}
+
+/* ---- pixel title screen ---- */
+.font-pixel { font-family: "Press Start 2P", "Courier New", monospace; letter-spacing: 0.02em; }
+.font-pixelbody { font-family: "Pixelify Sans", "VT323", "Courier New", monospace; }
+.pixel-screen { background: #040812; }
+.pixel-canvas { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; image-rendering: crisp-edges; display: block; }
+.crt { background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,0.22) 3px, rgba(0,0,0,0) 4px); mix-blend-mode: multiply; }
+.pixel-title { text-shadow: 4px 4px 0 #0b1426, 4px 4px 0 #0b1426, -2px 0 0 #1fa89b, 6px 6px 0 #c9821f; }
+.pixel-box { background: rgba(9,17,33,0.92); box-shadow: 0 0 0 3px #22314f, 4px 4px 0 3px #02050b; }
+.pixel-card { background: rgba(9,17,33,0.94); padding: 14px; box-shadow: 0 0 0 3px #2b3b5c, 6px 6px 0 3px #02050b; transition: transform 0.08s steps(2), box-shadow 0.08s steps(2); }
+.pixel-card:hover, .pixel-card-on { box-shadow: 0 0 0 3px #2ee6c9, 6px 6px 0 3px #02050b, 0 0 24px 4px rgba(46,230,201,0.25); transform: translate(-2px, -2px); }
+.pixel-card:active { transform: translate(2px, 2px); box-shadow: 0 0 0 3px #2ee6c9, 2px 2px 0 3px #02050b; }
+.blink { animation: blink 1s steps(2, start) infinite; }
+@keyframes blink { to { visibility: hidden; } }
+.marquee { display: flex; width: max-content; white-space: nowrap; animation: marquee 38s linear infinite; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.pixel-out { animation: pixelout 0.52s steps(6) forwards; }
+@keyframes pixelout { 0% { opacity: 1; filter: none; } 60% { opacity: 0.8; filter: blur(0) contrast(1.6) saturate(1.4); transform: scale(1.04); } 100% { opacity: 0; transform: scale(1.12); } }
+@media (prefers-reduced-motion: reduce) { .blink, .marquee, .pixel-out { animation: none; } }

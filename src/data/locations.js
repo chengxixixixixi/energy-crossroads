@@ -1,0 +1,42 @@
+// Curated sites. Tier: ILLUSTRATIVE parameters (load size, logistics, storage days, tariffs,
+// exposure) chosen to be representative of each system type; every value is editable in
+// the app. Names describe representative systems, not audited utility data.
+
+const island = (o) => ({ useCase: "island", margin: 0.08, tax: 0, storageDays: 30, ...o });
+const industrial = (o) => ({ useCase: "industrial", margin: 0.08, tax: 0, exportCredit: 0, ...o });
+const lng = (o) => ({ useCase: "lng", regas: 1.0, ...o });
+
+export const LOCATIONS = [
+  island({ id: "mv-addu", name: "Addu City", region: "Maldives", country: "Maldives", lat: -0.63, lon: 73.16, avgMW: 4, pvout: 1560, hzOil: 0.65, logistics: 0.25, storageDays: 30, note: "Outer-atoll grid; products shipped via Malé from Gulf and Singapore cargoes." }),
+  island({ id: "sc-mahe", name: "Mahé", region: "Seychelles", country: "Seychelles", lat: -4.62, lon: 55.45, avgMW: 50, pvout: 1560, hzOil: 0.65, logistics: 0.2, storageDays: 45, note: "National grid on the main island; diesel/HFO base load." }),
+  island({ id: "in-andaman", name: "Port Blair", region: "Andaman & Nicobar, India", country: "India", lat: 11.62, lon: 92.73, avgMW: 35, pvout: 1480, hzOil: 0.55, logistics: 0.18, storageDays: 30, note: "Islanded grid supplied with products from mainland Indian refineries." }),
+  island({ id: "in-lakshadweep", name: "Kavaratti", region: "Lakshadweep, India", country: "India", lat: 10.57, lon: 72.64, avgMW: 1.2, pvout: 1600, hzOil: 0.55, logistics: 0.35, storageDays: 20, note: "Small atoll microgrid; fuel by barge from Kochi." }),
+  island({ id: "ph-romblon", name: "Off-grid island grid", region: "Romblon class, Philippines", country: "Philippines", lat: 12.58, lon: 122.27, avgMW: 3, pvout: 1420, hzOil: 0.6, logistics: 0.16, storageDays: 20, note: "Representative small-island missionary-electrification grid." }),
+  island({ id: "id-sumba", name: "Sumba", region: "East Nusa Tenggara, Indonesia", country: "Indonesia", lat: -9.65, lon: 120.26, avgMW: 12, pvout: 1650, hzOil: 0.45, logistics: 0.2, storageDays: 15, note: "Eastern-island diesel system with strong dry-season solar." }),
+  island({ id: "fj-vanualevu", name: "Vanua Levu", region: "Fiji", country: "Fiji", lat: -16.43, lon: 179.37, avgMW: 8, pvout: 1500, hzOil: 0.55, logistics: 0.3, storageDays: 30, note: "Second-island grid; products from Singapore refineries." }),
+  island({ id: "to-tongatapu", name: "Tongatapu", region: "Tonga", country: "Tonga", lat: -21.14, lon: -175.2, avgMW: 7, pvout: 1520, hzOil: 0.55, logistics: 0.35, storageDays: 30, note: "Main-island grid; long product supply chain from Asia." }),
+  island({ id: "mh-majuro", name: "Majuro", region: "Marshall Islands", country: "Marshall Is.", lat: 7.09, lon: 171.38, avgMW: 9, pvout: 1550, hzOil: 0.55, logistics: 0.38, storageDays: 30, note: "Atoll capital grid; almost fully diesel." }),
+  island({ id: "pw-koror", name: "Koror", region: "Palau", country: "Palau", lat: 7.34, lon: 134.48, avgMW: 10, pvout: 1450, hzOil: 0.55, logistics: 0.35, storageDays: 30, note: "National grid on Babeldaob–Koror." }),
+  island({ id: "mu-rodrigues", name: "Rodrigues", region: "Mauritius", country: "Mauritius", lat: -19.72, lon: 63.42, avgMW: 3, pvout: 1580, hzOil: 0.6, logistics: 0.3, storageDays: 25, note: "Remote dependency of Mauritius; diesel plant with small wind." }),
+  island({ id: "km-ngazidja", name: "Grande Comore", region: "Comoros", country: "Comoros", lat: -11.7, lon: 43.26, avgMW: 6, pvout: 1600, hzOil: 0.6, logistics: 0.3, storageDays: 20, note: "Diesel grid supplied from Gulf product cargoes." }),
+  island({ id: "cv-saovicente", name: "São Vicente", region: "Cabo Verde", country: "Cabo Verde", lat: 16.87, lon: -24.98, avgMW: 8, pvout: 1750, hzOil: 0.15, logistics: 0.2, storageDays: 30, note: "Atlantic supply chain: price-exposed, physically remote from Hormuz." }),
+  island({ id: "bb-barbados", name: "Barbados", region: "Caribbean", country: "Barbados", lat: 13.19, lon: -59.54, avgMW: 100, pvout: 1650, hzOil: 0.05, logistics: 0.15, storageDays: 30, note: "Contrast case: high oil-price exposure, low physical Hormuz exposure." }),
+  island({ id: "us-molokai", name: "Molokaʻi", region: "Hawaiʻi, US", country: "United States of America", lat: 21.13, lon: -157.02, avgMW: 3, pvout: 1600, hzOil: 0.25, logistics: 0.3, storageDays: 30, note: "Small island grid; Hawaiʻi imports products from Asian refineries." }),
+  industrial({ id: "in-sanand", name: "Sanand industrial estate", region: "Gujarat, India", country: "India", lat: 22.99, lon: 72.38, avgMW: 8, pvout: 1620, hzOil: 0.45, hzLng: 0.5, logistics: 0.1, tariff: 95, tariffLink: 0.1, gridFuel: "lng", outageHours: 60, note: "Coal-heavy grid; tariff only weakly linked to LNG." }),
+  industrial({ id: "pk-karachi", name: "SITE industrial area", region: "Karachi, Pakistan", country: "Pakistan", lat: 24.9, lon: 67.02, avgMW: 5, pvout: 1700, hzOil: 0.8, hzLng: 0.85, logistics: 0.1, tariff: 140, tariffLink: 0.35, gridFuel: "lng", outageHours: 400, note: "RLNG and furnace oil set marginal costs; frequent load-shedding." }),
+  industrial({ id: "bd-gazipur", name: "Gazipur garment cluster", region: "Dhaka, Bangladesh", country: "Bangladesh", lat: 24.0, lon: 90.42, avgMW: 4, pvout: 1420, hzOil: 0.7, hzLng: 0.6, logistics: 0.1, tariff: 105, tariffLink: 0.4, gridFuel: "lng", outageHours: 300, note: "Gas shortages translate into grid outages and diesel backup." }),
+  industrial({ id: "kr-ulsan", name: "Ulsan petrochemical complex", region: "South Korea", country: "South Korea", lat: 35.5, lon: 129.38, avgMW: 40, pvout: 1330, hzOil: 0.65, hzLng: 0.2, logistics: 0.08, tariff: 120, tariffLink: 0.3, gridFuel: "lng", outageHours: 5, note: "Reliable grid; exposure is via LNG-linked tariffs." }),
+  industrial({ id: "ke-mombasa", name: "Mombasa industrial area", region: "Kenya", country: "Kenya", lat: -4.04, lon: 39.66, avgMW: 3, pvout: 1700, hzOil: 0.7, hzLng: 0, logistics: 0.12, tariff: 150, tariffLink: 0.2, gridFuel: "oil", outageHours: 120, note: "Fuel-cost charge on tariffs passes oil prices through." }),
+  lng({ id: "pk-rlng", switchShare: 0.4, name: "RLNG power fleet", region: "Punjab, Pakistan", country: "Pakistan", lat: 31.3, lon: 73.9, avgMW: 2000, pvout: 1600, hzOil: 0.8, hzLng: 0.85, heatRate: 6.8, storageDays: 3, windCF: 0, note: "Imported-LNG CCGTs; Qatar is the dominant supplier." }),
+  lng({ id: "bd-gas", switchShare: 0.3, name: "LNG-dependent gas fleet", region: "Dhaka region, Bangladesh", country: "Bangladesh", lat: 23.8, lon: 90.4, avgMW: 1500, pvout: 1420, hzOil: 0.7, hzLng: 0.6, heatRate: 8.0, storageDays: 3, windCF: 0, note: "Older, less efficient gas units; thin storage." }),
+  lng({ id: "jp-kanto", switchShare: 0.35, name: "Tokyo Bay LNG fleet", region: "Kanto, Japan", country: "Japan", lat: 35.5, lon: 139.9, avgMW: 3000, pvout: 1280, hzOil: 0.85, hzLng: 0.08, heatRate: 6.8, storageDays: 14, windCF: 0.3, note: "Diversified LNG sources; exposure is mainly price." }),
+  lng({ id: "kr-incheon", switchShare: 0.3, name: "Incheon LNG cluster", region: "South Korea", country: "South Korea", lat: 37.45, lon: 126.6, avgMW: 2000, pvout: 1330, hzOil: 0.65, hzLng: 0.2, heatRate: 6.9, storageDays: 10, windCF: 0.28, note: "KOGAS-supplied CCGTs around the capital region." }),
+  lng({ id: "tw-datan", switchShare: 0.2, name: "Datan / Taichung LNG fleet", region: "Taiwan", country: "Taiwan", lat: 25.03, lon: 121.05, avgMW: 3000, pvout: 1250, hzOil: 0.65, hzLng: 0.25, heatRate: 6.8, storageDays: 11, windCF: 0.38, note: "Gas ≈ half of power; offshore wind resource in the Strait." }),
+  lng({ id: "sg-gas", switchShare: 0.3, name: "Gas-fired grid", region: "Singapore", country: "Singapore", lat: 1.3, lon: 103.8, avgMW: 2000, pvout: 1300, hzOil: 0.7, hzLng: 0.2, heatRate: 6.9, storageDays: 5, windCF: 0, maxPvRatio: 0.3, note: "Land-constrained: solar cannot scale far, so substitution is limited." }),
+];
+
+export const USE_CASES = {
+  island: { label: "Island microgrid", short: "Island", incumbent: "Diesel", alt: "Solar + battery + diesel backup", driver: "Brent" },
+  industrial: { label: "Industrial facility", short: "Industrial", incumbent: "Grid + diesel backup", alt: "Solar + battery (grid retained)", driver: "Grid tariff" },
+  lng: { label: "LNG-dependent power system", short: "LNG power", incumbent: "Gas generation", alt: "Renewables + storage (gas retained)", driver: "LNG" },
+};

@@ -1,0 +1,30 @@
+{
+  "name": "energy-crossroads",
+  "version": "0.2.0",
+  "description": "A pixel-art geopolitical energy strategy game: Hormuz shocks vs solar + storage on island grids.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "esbuild scripts/checks/test-game.js --bundle --platform=node --format=esm --outfile=.tmp/check.mjs --log-level=warning && node .tmp/check.mjs"
+  },
+  "dependencies": {
+    "@fontsource/pixelify-sans": "^5.1.0",
+    "@fontsource/press-start-2p": "^5.1.0",
+    "d3": "^7.9.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "vite": "^5.4.10",
+    "vite-plugin-singlefile": "^2.0.3"
+  },
+  "type": "module",
+  "private": true
+}
